@@ -1,9 +1,11 @@
-﻿using GameLibrary.model;
+﻿using GameLibrary.Menu;
+using GameLibrary.model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static GameLibrary.SubtaskOne;
 
 namespace GameLibrary
 {
@@ -11,21 +13,42 @@ namespace GameLibrary
     {
         static void Main(string[] args)
         {
-            using (var context = new GameDbContext())
+            var twoTask = new GameLibrary.Menu.Menu("TwoTask", new List<IMenuItem>
             {
-                context.Database.EnsureCreated();
+                new SubtaskOne(),
+                new SubtaskTwo(),
+                new SubtaskThree(),
+                new SubtaskFour(),
+                new SubtaskFive(),
+            });
 
-                context.Games.AddRange(
-                    new Game { Title = "Game 1", Studio = "Studio 1", Genre = "RPG", ReleaseDate = new DateTime(2022, 1, 1) },
-                    new Game { Title = "Game 2", Studio = "Studio 2", Genre = "Action", ReleaseDate = new DateTime(2023, 2, 1) }
-                );
-                context.SaveChanges();
+            var threeTask = new GameLibrary.Menu.Menu("threeTask", new List<IMenuItem>
+            {
+                new ThreeTask.SubtaskOne(),
+                new ThreeTask.SubtaskTwo(),
+                new ThreeTask.SubtaskThree(),
+                new ThreeTask.SubtaskFour(),
+                new ThreeTask.SubtaskFive(),
+                new ThreeTask.SubtaskSix(),
+            });
 
-                foreach (var game in context.Games)
-                {
-                    Console.WriteLine($"Title: {game.Title}, Studio: {game.Studio}, Genre: {game.Genre}, Release Date: {game.ReleaseDate}");
-                }
-            }
+            var FourTask = new GameLibrary.Menu.Menu("FourTask", new List<IMenuItem>
+            {
+                new FourTask.SubtaskOne(),
+                new FourTask.SubtaskTwo(),
+                new FourTask.SubtaskThree(),
+            });
+
+
+            var mainMenu = new GameLibrary.Menu.Menu("Главное меню", new List<IMenuItem>
+            {
+                new TaskOne(),
+                twoTask,
+                threeTask,
+                FourTask
+            });
+
+            mainMenu.Execute();
         }
     }
 }
